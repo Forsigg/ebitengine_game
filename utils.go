@@ -2,18 +2,34 @@ package main
 
 import "github.com/hajimehoshi/ebiten/v2"
 
-func CheckAndProcessWalk(g *Game) {
+func CheckAndProcessWalk(p *Sprite) {
 	// TODO: replace hardcoded WASD keys to configurable
 	if ebiten.IsKeyPressed(ebiten.KeyRight) || ebiten.IsKeyPressed(ebiten.KeyD) {
-		g.X += PlayerMoveSpeed
+		p.X += PlayerMoveSpeed
 	}
 	if ebiten.IsKeyPressed(ebiten.KeyLeft) || ebiten.IsKeyPressed(ebiten.KeyA) {
-		g.X -= PlayerMoveSpeed
+		p.X -= PlayerMoveSpeed
 	}
 	if ebiten.IsKeyPressed(ebiten.KeyUp) || ebiten.IsKeyPressed(ebiten.KeyW) {
-		g.Y -= PlayerMoveSpeed
+		p.Y -= PlayerMoveSpeed
 	}
 	if ebiten.IsKeyPressed(ebiten.KeyDown) || ebiten.IsKeyPressed(ebiten.KeyS) {
-		g.Y += PlayerMoveSpeed
+		p.Y += PlayerMoveSpeed
+	}
+}
+
+func EnemyFollowByPlayer(player *Sprite, enemies []*Sprite) {
+	for _, enemy := range enemies {
+		if enemy.X < player.X {
+			enemy.X += PlayerMoveSpeed / 2.0
+		} else if enemy.X > player.X {
+			enemy.X -= PlayerMoveSpeed / 2.0
+		}
+
+		if enemy.Y > player.Y {
+			enemy.Y -= PlayerMoveSpeed / 2.0
+		} else if enemy.Y < player.Y {
+			enemy.Y += PlayerMoveSpeed / 2.0
+		}
 	}
 }

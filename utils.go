@@ -1,6 +1,10 @@
 package main
 
-import "github.com/hajimehoshi/ebiten/v2"
+import (
+	"image"
+
+	"github.com/hajimehoshi/ebiten/v2"
+)
 
 func CheckAndProcessWalk(p *Sprite) {
 	// TODO: replace hardcoded WASD keys to configurable
@@ -18,18 +22,39 @@ func CheckAndProcessWalk(p *Sprite) {
 	}
 }
 
-func EnemyFollowByPlayer(player *Sprite, enemies []*Sprite) {
+func EnemyFollowByPlayer(player *Sprite, enemies []*Enemy) {
 	for _, enemy := range enemies {
+		if !enemy.FollowPlayer {
+			continue
+		}
+
+		// process X direction
 		if enemy.X < player.X {
 			enemy.X += PlayerMoveSpeed / 2.0
 		} else if enemy.X > player.X {
 			enemy.X -= PlayerMoveSpeed / 2.0
 		}
 
+		// process Y direction
 		if enemy.Y > player.Y {
 			enemy.Y -= PlayerMoveSpeed / 2.0
 		} else if enemy.Y < player.Y {
 			enemy.Y += PlayerMoveSpeed / 2.0
 		}
+	}
+}
+
+func DrawSprites(screen *ebiten.Image, sprites []*Sprite) {
+	for _, sprite := range sprites {
+		spriteOpts := &ebiten.DrawImageOptions{}
+		spriteOpts.GeoM.Translate(sprite.X, sprite.Y)
+
+		screen.DrawImage(
+			sprite.Img.SubImage(
+				image.Rect(0, 0, 0+TileSize, 0+TileSize),
+			).(*ebiten.Image),
+			spriteOpts,
+		)
+		spriteOpts.GeoM.Reset()
 	}
 }

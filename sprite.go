@@ -14,3 +14,15 @@ func NewSprite(img *ebiten.Image, x, y float64) *Sprite {
 		Y:   y,
 	}
 }
+
+type Enemy struct {
+	*Sprite
+	FollowPlayer bool
+}
+
+func NewEnemy(img *ebiten.Image, isFollow bool, x, y float64) *Enemy {
+	return &Enemy{
+		Sprite:       NewSprite(img, x, y),
+		FollowPlayer: isFollow,
+	}
+}

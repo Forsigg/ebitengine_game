@@ -4,9 +4,11 @@ import (
 	"image"
 
 	"github.com/hajimehoshi/ebiten/v2"
+
+	"ebit_game/entities"
 )
 
-func CheckAndProcessWalk(p *Sprite) {
+func CheckAndProcessWalk(p *entities.Sprite) {
 	// TODO: replace hardcoded WASD keys to configurable
 	if ebiten.IsKeyPressed(ebiten.KeyRight) || ebiten.IsKeyPressed(ebiten.KeyD) {
 		p.X += PlayerMoveSpeed
@@ -22,7 +24,7 @@ func CheckAndProcessWalk(p *Sprite) {
 	}
 }
 
-func EnemyFollowByPlayer(player *Sprite, enemies []*Enemy) {
+func EnemyFollowByPlayer(player *entities.Sprite, enemies []*entities.Enemy) {
 	for _, enemy := range enemies {
 		if !enemy.FollowPlayer {
 			continue
@@ -44,10 +46,11 @@ func EnemyFollowByPlayer(player *Sprite, enemies []*Enemy) {
 	}
 }
 
-func DrawSprites(screen *ebiten.Image, sprites []*Sprite) {
+func DrawSprites(screen *ebiten.Image, camera *Camera, sprites []*entities.Sprite) {
 	for _, sprite := range sprites {
 		spriteOpts := &ebiten.DrawImageOptions{}
 		spriteOpts.GeoM.Translate(sprite.X, sprite.Y)
+		spriteOpts.GeoM.Translate(camera.X, camera.Y)
 
 		screen.DrawImage(
 			sprite.Img.SubImage(

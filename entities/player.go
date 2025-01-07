@@ -1,6 +1,8 @@
-package main
+package entities
 
-import "github.com/hajimehoshi/ebiten/v2"
+import (
+	"github.com/hajimehoshi/ebiten/v2"
+)
 
 type Player struct {
 	*Sprite

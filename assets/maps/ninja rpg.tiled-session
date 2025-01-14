@@ -3,25 +3,62 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "",
+    "activeFile": "tilesets/TilesetFloor.json",
     "expandedProjectPaths": [
+        "."
     ],
     "fileStates": {
+        "map.json": {
+            "scale": 1.18,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 318.6440677966102,
+                "y": 69.91525423728814
+            }
+        },
+        "tilesets/TilesetFloor.json": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1.8293,
+            "scaleInEditor": 1.99
+        },
+        "tilesets/TilesetFloor.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1.8293,
+            "scaleInEditor": 1.99
+        },
+        "tilesets/buildings.json": {
+            "dynamicWrapping": true,
+            "scaleInDock": 1,
+            "scaleInEditor": 1.99
+        },
+        "tilesets/buildings.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        }
     },
-    "last.imagePath": "/Users/aleksandra-sapetova/code/Go/ebit_game/assets/packs/ninja_assets/Backgrounds/Tilesets",
+    "last.imagePath": "/Users/aleksandra-sapetova/code/Go/ebit_game/assets/images/buildings",
     "map.height": 80,
     "map.lastUsedFormat": "json",
     "map.tileHeight": 16,
     "map.tileWidth": 16,
     "map.width": 100,
     "openFiles": [
+        "map.json",
+        "tilesets/TilesetFloor.json",
+        "tilesets/buildings.json"
     ],
     "project": "ninja rpg.tiled-project",
     "recentFiles": [
+        "map.json",
+        "tilesets/buildings.json",
+        "tilesets/TilesetFloor.json",
+        "tilesets/buildings.tsx",
+        "tilesets/TilesetFloor.tsx"
     ],
-    "tileset.lastUsedFormat": "tsx",
+    "tileset.lastUsedFormat": "json",
     "tileset.tileSize": {
         "height": 16,
         "width": 16
-    }
+    },
+    "tileset.type": 1
 }

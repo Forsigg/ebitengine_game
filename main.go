@@ -15,6 +15,7 @@ type Game struct {
 	sprites     []*entities.Sprite
 	enemies     []*entities.Enemy
 	tilemapJSON *TilemapJSON
+	tilesets    []Tileset
 	tilemapImg  *ebiten.Image
 	camera      *Camera
 }
@@ -45,26 +46,23 @@ func (g *Game) Draw(screen *ebiten.Image) {
 	opts := &ebiten.DrawImageOptions{}
 
 	// loop over the layers
-	for _, layer := range g.tilemapJSON.Layers {
+	for layerIndex, layer := range g.tilemapJSON.Layers {
 		for index, id := range layer.Data {
+
+			if id == 0 {
+				continue
+			}
+
 			x := (index % layer.Width) * TileSize
 			y := (index / layer.Width) * TileSize
 
-			srcX := (id - 1) % 22
-			srcY := (id - 1) / 22
-
-			srcX *= 16
-			srcY *= 16
+			img := g.tilesets[layerIndex].Img(id)
 
 			opts.GeoM.Translate(float64(x), float64(y))
+			opts.GeoM.Translate(0.0, -(float64(img.Bounds().Dy()))+float64(TileSize))
 			opts.GeoM.Translate(g.camera.X, g.camera.Y)
 
-			screen.DrawImage(
-				g.tilemapImg.SubImage(
-					image.Rect(srcX, srcY, srcX+TileSize, srcY+TileSize),
-				).(*ebiten.Image),
-				opts,
-			)
+			screen.DrawImage(img, opts)
 
 			opts.GeoM.Reset()
 		}
@@ -122,6 +120,11 @@ func main() {
 		log.Fatal(err)
 	}
 
+	tilesets, err := tilemap.GenTilesets()
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	if err := ebiten.RunGame(&Game{
 		player: entities.NewPlayer(playerImg, 50, 50, 100),
 		enemies: []*entities.Enemy{
@@ -131,6 +134,7 @@ func main() {
 		tilemapJSON: tilemap,
 		tilemapImg:  tilemapImg,
 		camera:      NewCamera(0.0, 0.0),
+		tilesets:    tilesets,
 	}); err != nil {
 		log.Fatal(err)
 	}
